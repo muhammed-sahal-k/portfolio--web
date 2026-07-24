@@ -244,15 +244,28 @@ export const submitContactForm = async (req, res, next) => {
     console.log("==================================");
 
     // Create transporter INSIDE request
+    // const transporter = nodemailer.createTransport({
+    //   host: "smtp.gmail.com",
+    //   port: 587,
+    //   secure: false,
+    //   auth: {
+    //     user: process.env.EMAIL_USER,
+    //     pass: process.env.EMAIL_PASS,
+    //   },
+    // });
+
+
+
+
     const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
-      auth: {
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
         user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS,
-      },
-    });
+        pass: process.env.EMAIL_PASS
+    }
+});
 
     // Verify SMTP connection
     await transporter.verify();
