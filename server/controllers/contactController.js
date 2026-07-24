@@ -257,15 +257,30 @@ export const submitContactForm = async (req, res, next) => {
 
 
 
-    const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-    }
+//     const transporter = nodemailer.createTransport({
+//     host: "smtp.gmail.com",
+//     port: 465,
+//     secure: true,
+//     auth: {
+//         user: process.env.EMAIL_USER,
+//         pass: process.env.EMAIL_PASS
+//     }
+// });
+
+
+
+
+const transporter = nodemailer.createTransport({
+  host: "smtp-relay.brevo.com",
+  port: 587,
+  secure: false,
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
 });
+
+
 
     // Verify SMTP connection
     await transporter.verify();
@@ -284,22 +299,49 @@ export const submitContactForm = async (req, res, next) => {
       savedContact = await contactDoc.save();
 
       // Send mail to yourself
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER,
-        subject: `New Portfolio Contact - ${name}`,
-        html: `
-          <h2>New Portfolio Message</h2>
+      // await transporter.sendMail({
+      //   from: process.env.EMAIL_USER,
+      //   to: process.env.EMAIL_USER,
+      //   subject: `New Portfolio Contact - ${name}`,
+      //   html: `
+      //     <h2>New Portfolio Message</h2>
 
-          <p><strong>Name:</strong> ${name}</p>
+      //     <p><strong>Name:</strong> ${name}</p>
 
-          <p><strong>Email:</strong> ${email}</p>
+      //     <p><strong>Email:</strong> ${email}</p>
 
-          <p><strong>Message:</strong></p>
+      //     <p><strong>Message:</strong></p>
 
-          <p>${message}</p>
-        `,
-      });
+      //     <p>${message}</p>
+      //   `,
+      // });
+
+
+
+
+
+
+
+await transporter.sendMail({
+  from: '"Muhammed Sahal" <sahalkmohammed95@gmail.com>',
+  to: "sahalkmohammed95@gmail.com",
+  subject: `New Portfolio Contact - ${name}`,
+  html: `
+    <h2>New Portfolio Message</h2>
+
+    <p><strong>Name:</strong> ${name}</p>
+
+    <p><strong>Email:</strong> ${email}</p>
+
+    <p><strong>Message:</strong></p>
+
+    <p>${message}</p>
+  `,
+});
+
+
+
+
 
       console.log("✅ Mail Sent Successfully");
 
