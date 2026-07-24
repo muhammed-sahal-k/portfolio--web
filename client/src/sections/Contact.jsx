@@ -247,7 +247,7 @@ catch (err) {
                     required
                     value={formData.name}
                     onChange={handleChange}
-                    placeholder="John Doe"
+                    placeholder="Muhammed"
                     className="w-full px-5 py-4 rounded-2xl bg-white/[0.03] border border-white/10 text-white placeholder-[#A0AEC0]/50 text-sm focus:outline-none focus:border-[#00E5FF] focus:ring-1 focus:ring-[#00E5FF] transition-all"
                   />
                 </div>
@@ -263,7 +263,7 @@ catch (err) {
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="john@example.com"
+                    placeholder="muhammed@example.com"
                     className="w-full px-5 py-4 rounded-2xl bg-white/[0.03] border border-white/10 text-white placeholder-[#A0AEC0]/50 text-sm focus:outline-none focus:border-[#00E5FF] focus:ring-1 focus:ring-[#00E5FF] transition-all"
                   />
                 </div>
