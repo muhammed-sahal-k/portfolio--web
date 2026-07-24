@@ -75,12 +75,25 @@ const Contact = () => {
     //   setFormData({ name: '', email: '', message: '' });
     // }
 
-    catch (err) {
+//     catch (err) {
+//   setStatus({
+//     loading: false,
+//     success: false,
+//     error: true,
+//     message: "Failed to send email.",
+//   });
+// }
+
+catch (err) {
+  console.error(err);
+
   setStatus({
     loading: false,
     success: false,
     error: true,
-    message: "Failed to send email.",
+    message:
+      err.response?.data?.message ||
+      "Failed to send message. Please try again later.",
   });
 }
   };

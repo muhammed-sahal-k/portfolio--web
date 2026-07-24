@@ -50,22 +50,72 @@
 
 
 
+// import dotenv from "dotenv";
+// dotenv.config();
+
+// import { connectDB } from "./config/db.js";
+// import app from "./app.js";
+
+// // console.log(process.env.EMAIL_USER);
+// // console.log(process.env.EMAIL_PASS);
+
+// const PORT = process.env.PORT || 5000;
+
+// connectDB();
+
+// app.listen(PORT, () => {
+//   console.log("EMAIL_USER =", process.env.EMAIL_USER);
+//   console.log("EMAIL_PASS =", process.env.EMAIL_PASS);
+
+//   console.log(`Server Running`);
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import dotenv from "dotenv";
 dotenv.config();
 
 import { connectDB } from "./config/db.js";
 import app from "./app.js";
 
-// console.log(process.env.EMAIL_USER);
-// console.log(process.env.EMAIL_PASS);
-
 const PORT = process.env.PORT || 5000;
 
+// Connect MongoDB
 connectDB();
 
+// Start Server
 app.listen(PORT, () => {
-  console.log("EMAIL_USER =", process.env.EMAIL_USER);
-  console.log("EMAIL_PASS =", process.env.EMAIL_PASS);
+  console.log("==================================");
+  console.log("🚀 Server Running Successfully");
+  console.log(`🌐 PORT : ${PORT}`);
+  console.log(`🌍 MODE : ${process.env.NODE_ENV}`);
 
-  console.log(`Server Running`);
+  // Check if Brevo API key exists
+  console.log(
+    "🔑 BREVO_API_KEY :",
+    process.env.BREVO_API_KEY ? "Loaded ✅" : "Missing ❌"
+  );
+
+  console.log("==================================");
 });

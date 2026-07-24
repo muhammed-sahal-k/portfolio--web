@@ -226,12 +226,243 @@
 
 
 
+// import Brevo from "@getbrevo/brevo";
+// import mongoose from "mongoose";
+// import Contact from "../models/Contact.js";
+// import nodemailer from "nodemailer";
+
+// // In-memory array fallback if database connection is pending
+// const localContactLog = [];
+
+// export const submitContactForm = async (req, res, next) => {
+//   try {
+//     const { name, email, message } = req.body;
+
+//     console.log("==================================");
+//     console.log("EMAIL_USER =", process.env.EMAIL_USER);
+//     console.log("EMAIL_PASS =", process.env.EMAIL_PASS);
+//     console.log("==================================");
+
+//     // Create transporter INSIDE request
+//     // const transporter = nodemailer.createTransport({
+//     //   host: "smtp.gmail.com",
+//     //   port: 587,
+//     //   secure: false,
+//     //   auth: {
+//     //     user: process.env.EMAIL_USER,
+//     //     pass: process.env.EMAIL_PASS,
+//     //   },
+//     // });
+
+
+
+
+// //     const transporter = nodemailer.createTransport({
+// //     host: "smtp.gmail.com",
+// //     port: 465,
+// //     secure: true,
+// //     auth: {
+// //         user: process.env.EMAIL_USER,
+// //         pass: process.env.EMAIL_PASS
+// //     }
+// // });
+
+
+
+
+// const transporter = nodemailer.createTransport({
+//   host: "smtp-relay.brevo.com",
+//   port: 587,
+//   secure: false,
+//   auth: {
+//     user: process.env.EMAIL_USER,
+//     pass: process.env.EMAIL_PASS,
+//   },
+// });
+
+
+
+//     // Verify SMTP connection
+//     await transporter.verify();
+//     console.log("✅ SMTP Connected");
+
+//     let savedContact = null;
+
+//     if (mongoose.connection.readyState === 1) {
+//       const contactDoc = new Contact({
+//         name,
+//         email,
+//         message,
+//         ipAddress: req.ip || req.headers["x-forwarded-for"] || "127.0.0.1",
+//       });
+
+//       savedContact = await contactDoc.save();
+
+//       // Send mail to yourself
+//       // await transporter.sendMail({
+//       //   from: process.env.EMAIL_USER,
+//       //   to: process.env.EMAIL_USER,
+//       //   subject: `New Portfolio Contact - ${name}`,
+//       //   html: `
+//       //     <h2>New Portfolio Message</h2>
+
+//       //     <p><strong>Name:</strong> ${name}</p>
+
+//       //     <p><strong>Email:</strong> ${email}</p>
+
+//       //     <p><strong>Message:</strong></p>
+
+//       //     <p>${message}</p>
+//       //   `,
+//       // });
+
+
+
+
+
+
+
+// await transporter.sendMail({
+//   from: '"Muhammed Sahal" <sahalkmohammed95@gmail.com>',
+//   to: "sahalkmohammed95@gmail.com",
+//   subject: `New Portfolio Contact - ${name}`,
+//   html: `
+//     <h2>New Portfolio Message</h2>
+
+//     <p><strong>Name:</strong> ${name}</p>
+
+//     <p><strong>Email:</strong> ${email}</p>
+
+//     <p><strong>Message:</strong></p>
+
+//     <p>${message}</p>
+//   `,
+// });
+
+
+
+
+
+//       console.log("✅ Mail Sent Successfully");
+
+//       console.log(`[Contact DB Saved]: Message from ${name} (${email})`);
+//     } else {
+//       savedContact = {
+//         id: Date.now(),
+//         name,
+//         email,
+//         message,
+//         createdAt: new Date().toISOString(),
+//       };
+
+//       localContactLog.push(savedContact);
+
+//       console.log(`[Contact Logged]: Message from ${name} (${email})`);
+//     }
+
+//     return res.status(201).json({
+//       success: true,
+//       message:
+//         "Thank you! Your message has been sent successfully. Muhammed will reach out to you shortly.",
+//       data: savedContact,
+//     });
+//   } catch (error) {
+//     console.log("==================================");
+//     console.log("ERROR CODE :", error.code);
+//     console.log("ERROR MESSAGE :", error.message);
+//     console.log("ERROR RESPONSE :", error.response);
+//     console.log("STATUS CODE :", error.responseCode);
+//     console.log(error);
+//     console.log("==================================");
+
+//     next(error);
+//   }
+// };
+
+// export const getContactMessages = async (req, res, next) => {
+//   try {
+//     if (mongoose.connection.readyState === 1) {
+//       const messages = await Contact.find().sort({ createdAt: -1 });
+
+//       return res.status(200).json({
+//         success: true,
+//         count: messages.length,
+//         messages,
+//       });
+//     }
+
+//     return res.status(200).json({
+//       success: true,
+//       count: localContactLog.length,
+//       messages: localContactLog,
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     next(error);
+//   }
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 import mongoose from "mongoose";
 import Contact from "../models/Contact.js";
-import nodemailer from "nodemailer";
+import Brevo from "@getbrevo/brevo";
 
-// In-memory array fallback if database connection is pending
+// Configure Brevo API
+const apiInstance = new Brevo.TransactionalEmailsApi();
+
+apiInstance.setApiKey(
+  Brevo.TransactionalEmailsApiApiKeys.apiKey,
+  process.env.BREVO_API_KEY
+);
+
+// In-memory fallback
 const localContactLog = [];
 
 export const submitContactForm = async (req, res, next) => {
@@ -239,114 +470,29 @@ export const submitContactForm = async (req, res, next) => {
     const { name, email, message } = req.body;
 
     console.log("==================================");
-    console.log("EMAIL_USER =", process.env.EMAIL_USER);
-    console.log("EMAIL_PASS =", process.env.EMAIL_PASS);
+    console.log("BREVO API KEY EXISTS :", !!process.env.BREVO_API_KEY);
     console.log("==================================");
-
-    // Create transporter INSIDE request
-    // const transporter = nodemailer.createTransport({
-    //   host: "smtp.gmail.com",
-    //   port: 587,
-    //   secure: false,
-    //   auth: {
-    //     user: process.env.EMAIL_USER,
-    //     pass: process.env.EMAIL_PASS,
-    //   },
-    // });
-
-
-
-
-//     const transporter = nodemailer.createTransport({
-//     host: "smtp.gmail.com",
-//     port: 465,
-//     secure: true,
-//     auth: {
-//         user: process.env.EMAIL_USER,
-//         pass: process.env.EMAIL_PASS
-//     }
-// });
-
-
-
-
-const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
-  port: 587,
-  secure: false,
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
-
-
-    // Verify SMTP connection
-    await transporter.verify();
-    console.log("✅ SMTP Connected");
 
     let savedContact = null;
 
+    // Save to MongoDB
     if (mongoose.connection.readyState === 1) {
       const contactDoc = new Contact({
         name,
         email,
         message,
-        ipAddress: req.ip || req.headers["x-forwarded-for"] || "127.0.0.1",
+        ipAddress:
+          req.ip ||
+          req.headers["x-forwarded-for"] ||
+          "127.0.0.1",
       });
 
       savedContact = await contactDoc.save();
 
-      // Send mail to yourself
-      // await transporter.sendMail({
-      //   from: process.env.EMAIL_USER,
-      //   to: process.env.EMAIL_USER,
-      //   subject: `New Portfolio Contact - ${name}`,
-      //   html: `
-      //     <h2>New Portfolio Message</h2>
+      console.log("✅ Contact Saved");
 
-      //     <p><strong>Name:</strong> ${name}</p>
-
-      //     <p><strong>Email:</strong> ${email}</p>
-
-      //     <p><strong>Message:</strong></p>
-
-      //     <p>${message}</p>
-      //   `,
-      // });
-
-
-
-
-
-
-
-await transporter.sendMail({
-  from: '"Muhammed Sahal" <sahalkmohammed95@gmail.com>',
-  to: "sahalkmohammed95@gmail.com",
-  subject: `New Portfolio Contact - ${name}`,
-  html: `
-    <h2>New Portfolio Message</h2>
-
-    <p><strong>Name:</strong> ${name}</p>
-
-    <p><strong>Email:</strong> ${email}</p>
-
-    <p><strong>Message:</strong></p>
-
-    <p>${message}</p>
-  `,
-});
-
-
-
-
-
-      console.log("✅ Mail Sent Successfully");
-
-      console.log(`[Contact DB Saved]: Message from ${name} (${email})`);
     } else {
+
       savedContact = {
         id: Date.now(),
         name,
@@ -357,23 +503,70 @@ await transporter.sendMail({
 
       localContactLog.push(savedContact);
 
-      console.log(`[Contact Logged]: Message from ${name} (${email})`);
+      console.log("⚠ MongoDB not connected");
     }
+
+    // Send Email using Brevo API
+
+    await apiInstance.sendTransacEmail({
+
+      sender: {
+        name: "Muhammed Sahal",
+        email: "sahalkmohammed95@gmail.com",
+      },
+
+      to: [
+        {
+          email: "sahalkmohammed95@gmail.com",
+          name: "Muhammed Sahal",
+        },
+      ],
+
+      replyTo: {
+        email: email,
+        name: name,
+      },
+
+      subject: `New Portfolio Contact - ${name}`,
+
+      htmlContent: `
+
+        <h2>New Portfolio Contact</h2>
+
+        <hr>
+
+        <p><b>Name :</b> ${name}</p>
+
+        <p><b>Email :</b> ${email}</p>
+
+        <p><b>Message :</b></p>
+
+        <p>${message}</p>
+
+      `,
+    });
+
+    console.log("✅ Email Sent Successfully");
 
     return res.status(201).json({
       success: true,
       message:
-        "Thank you! Your message has been sent successfully. Muhammed will reach out to you shortly.",
+        "Thank you! Your message has been sent successfully.",
       data: savedContact,
     });
+
   } catch (error) {
+
     console.log("==================================");
-    console.log("ERROR CODE :", error.code);
-    console.log("ERROR MESSAGE :", error.message);
-    console.log("ERROR RESPONSE :", error.response);
-    console.log("STATUS CODE :", error.responseCode);
-    console.log(error);
-    console.log("==================================");
+    console.log("BREVO ERROR");
+console.log("==================================");
+console.log(error.message);
+
+if (error.response) {
+  console.log(error.response.body);
+}
+
+console.log("==================================");    console.log("==================================");
 
     next(error);
   }
@@ -381,14 +574,19 @@ await transporter.sendMail({
 
 export const getContactMessages = async (req, res, next) => {
   try {
+
     if (mongoose.connection.readyState === 1) {
-      const messages = await Contact.find().sort({ createdAt: -1 });
+
+      const messages = await Contact.find().sort({
+        createdAt: -1,
+      });
 
       return res.status(200).json({
         success: true,
         count: messages.length,
         messages,
       });
+
     }
 
     return res.status(200).json({
@@ -396,8 +594,8 @@ export const getContactMessages = async (req, res, next) => {
       count: localContactLog.length,
       messages: localContactLog,
     });
+
   } catch (error) {
-    console.log(error);
     next(error);
   }
 };
