@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%">
+  <defs>
+    <linearGradient id="calcBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4a3b3a"/>
+      <stop offset="100%" stop-color="#362928"/>
+    </linearGradient>
+    <linearGradient id="calcBody" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2d2f34"/>
+      <stop offset="100%" stop-color="#222326"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#calcBg)"/>
+
+  <!-- Calculator Main Frame -->
+  <rect x="420" y="45" width="360" height="585" rx="24" fill="url(#calcBody)" filter="drop-shadow(0 25px 40px rgba(0,0,0,0.5))"/>
+
+  <!-- Title -->
+  <text x="600" y="105" text-anchor="middle" fill="#8b0000" font-family="serif" font-weight="bold" font-size="28">CALCULATER</text>
+
+  <!-- Screen Display -->
+  <rect x="460" y="130" width="280" height="65" rx="30" fill="#1f0a0a" stroke="#4a1515" stroke-width="2"/>
+  <text x="710" y="174" text-anchor="end" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="30">40</text>
+
+  <!-- Small Sub button -->
+  <rect x="610" y="208" width="125" height="30" rx="15" fill="#1f0a0a" stroke="#4a1515"/>
+  <text x="672" y="228" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-size="11">thankyou</text>
+
+  <!-- Buttons Grid -->
+  <!-- Row 1: 7 8 9 -->
+  <rect x="465" y="255" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="502" y="285" text-anchor="middle" fill="#fff" font-size="18">7</text>
+  <rect x="562" y="255" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="600" y="285" text-anchor="middle" fill="#fff" font-size="18">8</text>
+  <rect x="660" y="255" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="697" y="285" text-anchor="middle" fill="#fff" font-size="18">9</text>
+
+  <!-- Row 2: 4 5 6 -->
+  <rect x="465" y="320" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="502" y="350" text-anchor="middle" fill="#fff" font-size="18">4</text>
+  <rect x="562" y="320" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="600" y="350" text-anchor="middle" fill="#fff" font-size="18">5</text>
+  <rect x="660" y="320" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="697" y="350" text-anchor="middle" fill="#fff" font-size="18">6</text>
+
+  <!-- Row 3: 1 2 3 -->
+  <rect x="465" y="385" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="502" y="415" text-anchor="middle" fill="#fff" font-size="18">1</text>
+  <rect x="562" y="385" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="600" y="415" text-anchor="middle" fill="#fff" font-size="18">2</text>
+  <rect x="660" y="385" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="697" y="415" text-anchor="middle" fill="#fff" font-size="18">3</text>
+
+  <!-- Row 4: - 0 + -->
+  <rect x="465" y="450" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="502" y="480" text-anchor="middle" fill="#fff" font-size="20">-</text>
+  <rect x="562" y="450" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="600" y="480" text-anchor="middle" fill="#fff" font-size="18">0</text>
+  <rect x="660" y="450" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="697" y="480" text-anchor="middle" fill="#fff" font-size="20">+</text>
+
+  <!-- Row 5: . * / -->
+  <rect x="465" y="515" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="502" y="545" text-anchor="middle" fill="#fff" font-size="22">.</text>
+  <rect x="562" y="515" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="600" y="545" text-anchor="middle" fill="#fff" font-size="20">*</text>
+  <rect x="660" y="515" width="75" height="48" rx="20" fill="#1c2024" stroke="#101214"/><text x="697" y="545" text-anchor="middle" fill="#fff" font-size="20">/</text>
+
+  <!-- Row 6: c ac = -->
+  <rect x="465" y="575" width="75" height="40" rx="16" fill="#15181b"/><text x="502" y="600" text-anchor="middle" fill="#fff" font-size="15">c</text>
+  <rect x="562" y="575" width="75" height="40" rx="16" fill="#15181b"/><text x="600" y="600" text-anchor="middle" fill="#fff" font-size="15">ac</text>
+  <rect x="660" y="575" width="75" height="40" rx="16" fill="#15181b"/><text x="697" y="600" text-anchor="middle" fill="#fff" font-size="18">=</text>
+</svg>

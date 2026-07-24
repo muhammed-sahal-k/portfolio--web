@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="100%" height="100%">
+  <defs>
+    <linearGradient id="zindaBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#022c22"/>
+      <stop offset="100%" stop-color="#064e3b"/>
+    </linearGradient>
+    <linearGradient id="zindaBtn" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#zindaBg)"/>
+
+  <!-- Top Nav Bar -->
+  <rect x="0" y="0" width="1200" height="90" fill="#065f46"/>
+  <circle cx="80" cy="45" r="24" fill="#34d399"/>
+  <text x="120" y="55" fill="#ffffff" font-family="sans-serif" font-weight="900" font-size="28">ZINDA ONLINE SCHOOL</text>
+
+  <text x="800" y="53" fill="#a7f3d0" font-family="sans-serif" font-weight="bold" font-size="15">Courses</text>
+  <text x="900" y="53" fill="#a7f3d0" font-family="sans-serif" font-weight="bold" font-size="15">About Us</text>
+
+  <rect x="1000" y="25" width="120" height="40" rx="20" fill="url(#zindaBtn)"/>
+  <text x="1060" y="50" text-anchor="middle" fill="#042f2e" font-family="sans-serif" font-weight="bold" font-size="15">Portal Login</text>
+
+  <!-- Hero Content -->
+  <g transform="translate(100, 180)">
+    <text x="0" y="50" fill="#ffffff" font-family="sans-serif" font-weight="extrabold" font-size="44">Empowering Online Education</text>
+    <text x="0" y="100" fill="#6ee7b7" font-family="sans-serif" font-size="22">Interactive Virtual Classrooms, Live Modules & Online Student Community</text>
+
+    <rect x="0" y="140" width="220" height="54" rx="12" fill="url(#zindaBtn)"/>
+    <text x="110" y="174" text-anchor="middle" fill="#042f2e" font-family="sans-serif" font-weight="bold" font-size="18">Explore Programs</text>
+
+    <rect x="250" y="140" width="200" height="54" rx="12" fill="none" stroke="#34d399" stroke-width="2"/>
+    <text x="350" y="174" text-anchor="middle" fill="#ffffff" font-family="sans-serif" font-weight="bold" font-size="18">Student Portal</text>
+  </g>
+
+  <!-- Statistics Banner -->
+  <g transform="translate(100, 480)">
+    <rect x="0" y="0" width="1000" height="130" rx="20" fill="#044e3d" stroke="#065f46" stroke-width="2"/>
+
+    <text x="160" y="55" text-anchor="middle" fill="#34d399" font-family="sans-serif" font-weight="extrabold" font-size="36">10,000+</text>
+    <text x="160" y="90" text-anchor="middle" fill="#a7f3d0" font-family="sans-serif" font-size="14">Active Students</text>
+
+    <line x1="330" y1="30" x2="330" y2="100" stroke="#065f46" stroke-width="2"/>
+
+    <text x="500" y="55" text-anchor="middle" fill="#34d399" font-family="sans-serif" font-weight="extrabold" font-size="36">500+</text>
+    <text x="500" y="90" text-anchor="middle" fill="#a7f3d0" font-family="sans-serif" font-size="14">Certified Courses</text>
+
+    <line x1="670" y1="30" x2="670" y2="100" stroke="#065f46" stroke-width="2"/>
+
+    <text x="840" y="55" text-anchor="middle" fill="#34d399" font-family="sans-serif" font-weight="extrabold" font-size="36">99.8%</text>
+    <text x="840" y="90" text-anchor="middle" fill="#a7f3d0" font-family="sans-serif" font-size="14">Satisfaction Rate</text>
+  </g>
+</svg>
