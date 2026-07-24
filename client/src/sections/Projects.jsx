@@ -4,27 +4,54 @@ import { ExternalLink, Github, Sparkles, Layers, ArrowUpRight } from 'lucide-rea
 import SectionHeader from '../components/SectionHeader';
 import TiltCard from '../components/TiltCard';
 import { projectsData as defaultProjects } from '../data/portfolioData';
+import API from "../api";
 
 const Projects = () => {
   const [projects, setProjects] = useState(defaultProjects);
   const [filter, setFilter] = useState('All');
 
   // Load dynamically from backend API if available
-  useEffect(() => {
-    fetch('/api/projects')
-      ? fetch('/api/projects')
-          .then((res) => res.json())
-          .then((data) => {
-            if (data && data.success && data.projects.length > 0) {
-              setProjects(data.projects);
-            }
-          })
-          .catch(() => {
-            // Smooth silent fallback to client local structured projects
-            setProjects(defaultProjects);
-          })
-      : setProjects(defaultProjects);
-  }, []);
+  // useEffect(() => {
+  //   fetch('/api/projects')
+  //     ? fetch('/api/projects')
+  //         .then((res) => res.json())
+  //         .then((data) => {
+  //           if (data && data.success && data.projects.length > 0) {
+  //             setProjects(data.projects);
+  //           }
+  //         })
+  //         .catch(() => {
+  //           // Smooth silent fallback to client local structured projects
+  //           setProjects(defaultProjects);
+  //         })
+  //     : setProjects(defaultProjects);
+  // }, []);
+
+
+
+
+
+
+
+useEffect(() => {
+  API.get("/api/projects")
+    .then((res) => {
+      if (
+        res.data &&
+        res.data.success &&
+        res.data.projects.length > 0
+      ) {
+        setProjects(res.data.projects);
+      }
+    })
+    .catch(() => {
+      setProjects(defaultProjects);
+    });
+}, []);
+
+
+
+
 
   const filteredProjects =
     filter === 'All'

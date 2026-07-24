@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import axios from 'axios';
+import API from '../api';
+// import axios from 'axios';
 import {
   Mail,
   Phone,
@@ -42,7 +43,8 @@ const Contact = () => {
 
     try {
       // POST message to Express Backend /api/contact
-      const response = await axios.post('/api/contact', formData);
+      // const response = await axios.post('/api/contact', formData);
+      const response = await API.post('/api/contact', formData);
 
       if (response.data && response.data.success) {
         setStatus({
