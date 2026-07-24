@@ -4,7 +4,7 @@ export const getProjects = async (req, res) => {
       id: 1,
       name: "Zinda Online School",
       description: "A professional online learning platform designed for students and educators featuring secure login, modern responsive interface, online learning modules, and elegant UI/UX.",
-      image: "/src/assets/profile/project7.png",
+      image: "/src/assets/projects/project7.png",
       tech: ["React", "Node", "Express", "MongoDB", "UI/UX"],
       liveDemo: "https://www.zindaonlineschool.com/",
       github: "https://github.com/muhammed-sahal-k",

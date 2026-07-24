@@ -1,4 +1,4 @@
-import projectImages from '../assets/profile';
+import projectImages from '../assets/projects';
 
 export const personalInfo = {
   name: "Muhammed Sahal K",
