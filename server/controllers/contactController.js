@@ -452,7 +452,7 @@
 
 import mongoose from "mongoose";
 import Contact from "../models/Contact.js";
-import Brevo from "@getbrevo/brevo";
+import * as Brevo from "@getbrevo/brevo";
 
 // Configure Brevo API
 const apiInstance = new Brevo.TransactionalEmailsApi();
