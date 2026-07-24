@@ -450,17 +450,188 @@
 
 
 
+// import mongoose from "mongoose";
+// import Contact from "../models/Contact.js";
+// // import * as Brevo from "@getbrevo/brevo";
+// import axios from "axios";
+
+// // Configure Brevo API
+// const apiInstance = new Brevo.TransactionalEmailsApi();
+
+// apiInstance.setApiKey(
+//   Brevo.TransactionalEmailsApiApiKeys.apiKey,
+//   process.env.BREVO_API_KEY
+// );
+
+// // In-memory fallback
+// const localContactLog = [];
+
+// export const submitContactForm = async (req, res, next) => {
+//   try {
+//     const { name, email, message } = req.body;
+
+//     console.log("==================================");
+//     console.log("BREVO API KEY EXISTS :", !!process.env.BREVO_API_KEY);
+//     console.log("==================================");
+
+//     let savedContact = null;
+
+//     // Save to MongoDB
+//     if (mongoose.connection.readyState === 1) {
+//       const contactDoc = new Contact({
+//         name,
+//         email,
+//         message,
+//         ipAddress:
+//           req.ip ||
+//           req.headers["x-forwarded-for"] ||
+//           "127.0.0.1",
+//       });
+
+//       savedContact = await contactDoc.save();
+
+//       console.log("✅ Contact Saved");
+
+//     } else {
+
+//       savedContact = {
+//         id: Date.now(),
+//         name,
+//         email,
+//         message,
+//         createdAt: new Date().toISOString(),
+//       };
+
+//       localContactLog.push(savedContact);
+
+//       console.log("⚠ MongoDB not connected");
+//     }
+
+//     // Send Email using Brevo API
+
+//     await apiInstance.sendTransacEmail({
+
+//       sender: {
+//         name: "Muhammed Sahal",
+//         email: "sahalkmohammed95@gmail.com",
+//       },
+
+//       to: [
+//         {
+//           email: "sahalkmohammed95@gmail.com",
+//           name: "Muhammed Sahal",
+//         },
+//       ],
+
+//       replyTo: {
+//         email: email,
+//         name: name,
+//       },
+
+//       subject: `New Portfolio Contact - ${name}`,
+
+//       htmlContent: `
+
+//         <h2>New Portfolio Contact</h2>
+
+//         <hr>
+
+//         <p><b>Name :</b> ${name}</p>
+
+//         <p><b>Email :</b> ${email}</p>
+
+//         <p><b>Message :</b></p>
+
+//         <p>${message}</p>
+
+//       `,
+//     });
+
+//     console.log("✅ Email Sent Successfully");
+
+//     return res.status(201).json({
+//       success: true,
+//       message:
+//         "Thank you! Your message has been sent successfully.",
+//       data: savedContact,
+//     });
+
+//   } catch (error) {
+
+//     console.log("==================================");
+//     console.log("BREVO ERROR");
+// console.log("==================================");
+// console.log(error.message);
+
+// if (error.response) {
+//   console.log(error.response.body);
+// }
+
+// console.log("==================================");    console.log("==================================");
+
+//     next(error);
+//   }
+// };
+
+// export const getContactMessages = async (req, res, next) => {
+//   try {
+
+//     if (mongoose.connection.readyState === 1) {
+
+//       const messages = await Contact.find().sort({
+//         createdAt: -1,
+//       });
+
+//       return res.status(200).json({
+//         success: true,
+//         count: messages.length,
+//         messages,
+//       });
+
+//     }
+
+//     return res.status(200).json({
+//       success: true,
+//       count: localContactLog.length,
+//       messages: localContactLog,
+//     });
+
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import mongoose from "mongoose";
 import Contact from "../models/Contact.js";
-import * as Brevo from "@getbrevo/brevo";
-
-// Configure Brevo API
-const apiInstance = new Brevo.TransactionalEmailsApi();
-
-apiInstance.setApiKey(
-  Brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY
-);
+import axios from "axios";
 
 // In-memory fallback
 const localContactLog = [];
@@ -470,12 +641,12 @@ export const submitContactForm = async (req, res, next) => {
     const { name, email, message } = req.body;
 
     console.log("==================================");
-    console.log("BREVO API KEY EXISTS :", !!process.env.BREVO_API_KEY);
+    console.log("BREVO API KEY EXISTS:", !!process.env.BREVO_API_KEY);
     console.log("==================================");
 
     let savedContact = null;
 
-    // Save to MongoDB
+    // Save contact to MongoDB
     if (mongoose.connection.readyState === 1) {
       const contactDoc = new Contact({
         name,
@@ -489,10 +660,8 @@ export const submitContactForm = async (req, res, next) => {
 
       savedContact = await contactDoc.save();
 
-      console.log("✅ Contact Saved");
-
+      console.log("✅ Contact Saved to MongoDB");
     } else {
-
       savedContact = {
         id: Date.now(),
         name,
@@ -503,48 +672,53 @@ export const submitContactForm = async (req, res, next) => {
 
       localContactLog.push(savedContact);
 
-      console.log("⚠ MongoDB not connected");
+      console.log("⚠ MongoDB not connected. Saved locally.");
     }
 
-    // Send Email using Brevo API
-
-    await apiInstance.sendTransacEmail({
-
-      sender: {
-        name: "Muhammed Sahal",
-        email: "sahalkmohammed95@gmail.com",
-      },
-
-      to: [
-        {
-          email: "sahalkmohammed95@gmail.com",
+    // Send email using Brevo REST API
+    await axios.post(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        sender: {
           name: "Muhammed Sahal",
+          email: "sahalkmohammed95@gmail.com",
         },
-      ],
 
-      replyTo: {
-        email: email,
-        name: name,
+        to: [
+          {
+            email: "sahalkmohammed95@gmail.com",
+            name: "Muhammed Sahal",
+          },
+        ],
+
+        replyTo: {
+          email: email,
+          name: name,
+        },
+
+        subject: `New Portfolio Contact - ${name}`,
+
+        htmlContent: `
+          <h2>New Portfolio Contact</h2>
+          <hr>
+
+          <p><strong>Name:</strong> ${name}</p>
+
+          <p><strong>Email:</strong> ${email}</p>
+
+          <p><strong>Message:</strong></p>
+
+          <p>${message}</p>
+        `,
       },
-
-      subject: `New Portfolio Contact - ${name}`,
-
-      htmlContent: `
-
-        <h2>New Portfolio Contact</h2>
-
-        <hr>
-
-        <p><b>Name :</b> ${name}</p>
-
-        <p><b>Email :</b> ${email}</p>
-
-        <p><b>Message :</b></p>
-
-        <p>${message}</p>
-
-      `,
-    });
+      {
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+          "api-key": process.env.BREVO_API_KEY,
+        },
+      }
+    );
 
     console.log("✅ Email Sent Successfully");
 
@@ -554,19 +728,17 @@ export const submitContactForm = async (req, res, next) => {
         "Thank you! Your message has been sent successfully.",
       data: savedContact,
     });
-
   } catch (error) {
-
     console.log("==================================");
     console.log("BREVO ERROR");
-console.log("==================================");
-console.log(error.message);
+    console.log(error.message);
 
-if (error.response) {
-  console.log(error.response.body);
-}
+    if (error.response) {
+      console.log("Status:", error.response.status);
+      console.log("Data:", error.response.data);
+    }
 
-console.log("==================================");    console.log("==================================");
+    console.log("==================================");
 
     next(error);
   }
@@ -574,9 +746,7 @@ console.log("==================================");    console.log("=============
 
 export const getContactMessages = async (req, res, next) => {
   try {
-
     if (mongoose.connection.readyState === 1) {
-
       const messages = await Contact.find().sort({
         createdAt: -1,
       });
@@ -586,7 +756,6 @@ export const getContactMessages = async (req, res, next) => {
         count: messages.length,
         messages,
       });
-
     }
 
     return res.status(200).json({
@@ -594,7 +763,6 @@ export const getContactMessages = async (req, res, next) => {
       count: localContactLog.length,
       messages: localContactLog,
     });
-
   } catch (error) {
     next(error);
   }
