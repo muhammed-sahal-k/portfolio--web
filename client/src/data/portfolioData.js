@@ -152,7 +152,7 @@ export const projectsData = [
     id: 2,
     name: "ApexTasks – Task Management System",
     description: "A modern responsive task management application built with the MERN Stack featuring secure authentication, task organization, CRUD operations, responsive UI, and efficient workflow management.",
-    image: "/src/assets/projects/project1.png",
+    image: projectImages.project1,
     tech: ["React", "Node", "Express", "MongoDB", "JWT", "REST API"],
     liveDemo: "https://taskmanagement-machine-text.vercel.app/",
     github: "https://github.com/muhammed-sahal-k/TASKMANAGEMENT--MACHINE--TEXT",
